@@ -13,7 +13,7 @@ function decodeColorMap(json) {
 }
 
 function $$fetch(query) {
-  return Axios.get("http://www.mocky.io/v2/5cd56c622e0000b8185276c3/" + query).then((function (response) {
+  return Axios.get("http://www.mocky.io/v2/5cd9298a3000008320c01440/" + query).then((function (response) {
                   var tmp;
                   try {
                     tmp = /* Ok */Block.__(0, [decodeColorMap(response.data)]);
@@ -85,15 +85,11 @@ function Component2(Props) {
   React.useEffect((function () {
           var match = stateUI[/* colorMapQuery */2];
           if (match !== undefined) {
-            var query = match;
-            return (function (param) {
-                      setColorMap(query);
-                      return /* () */0;
-                    });
+            setColorMap(match);
+            return undefined;
           } else {
-            return (function (param) {
-                      return Curry._1(dispatchAPI, /* RemoveColorMap */0);
-                    });
+            Curry._1(dispatchAPI, /* RemoveColorMap */0);
+            return undefined;
           }
         }), /* array */[stateUI[/* colorMapQuery */2]]);
   var match$2 = stateUI[/* show */1];

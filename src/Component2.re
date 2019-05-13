@@ -1,6 +1,5 @@
 external castErrorUnsafe: Js.Promise.error => Js.t('a) = "%identity";
 
-
 /* State declaration */
 type stateUI = {
   count: int,
@@ -25,7 +24,7 @@ let decodeColorMap = (json: Js.Json.t): OurTypes.colorMap =>
 module ColorMapApi = {
   let fetch = (query: string) =>
     Js.Promise.(
-      Axios.get("http://www.mocky.io/v2/5cd56c622e0000b8185276c3" ++ "/" ++ query)
+      Axios.get("http://www.mocky.io/v2/5cd9298a3000008320c01440" ++ "/" ++ query)
       |> then_(response =>
            (
              try (response##data->decodeColorMap->Belt.Result.Ok) {
@@ -75,8 +74,12 @@ let make = (~greeting) => {
   React.useEffect1(
     () =>
       switch (stateUI.colorMapQuery) {
-      | None => Some((() => RemoveColorMap |> dispatchAPI))
-      | Some(query) => Some((() => setColorMap(query) |> ignore))
+      | None =>
+        RemoveColorMap |> dispatchAPI;
+        None;
+      | Some(query) =>
+        setColorMap(query) |> ignore;
+        None;
       },
     [|stateUI.colorMapQuery|],
   );
