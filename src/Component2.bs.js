@@ -9,24 +9,22 @@ var Json_decode = require("@glennsl/bs-json/src/Json_decode.bs.js");
 var Caml_js_exceptions = require("bs-platform/lib/js/caml_js_exceptions.js");
 
 function decodeColorMap(json) {
-  return /* record */[/* name */Json_decode.field("name", Json_decode.string, json)];
+  try {
+    return /* Ok */Block.__(0, [/* record */[/* name */Json_decode.field("name", Json_decode.string, json)]]);
+  }
+  catch (raw_exn){
+    var exn = Caml_js_exceptions.internalToOCamlException(raw_exn);
+    if (exn[0] === Json_decode.DecodeError) {
+      return /* Error */Block.__(1, [exn[1]]);
+    } else {
+      throw exn;
+    }
+  }
 }
 
 function $$fetch(query) {
   return Axios.get("http://www.mocky.io/v2/5cd9298a3000008320c01440/" + query).then((function (response) {
-                  var tmp;
-                  try {
-                    tmp = /* Ok */Block.__(0, [decodeColorMap(response.data)]);
-                  }
-                  catch (raw_exn){
-                    var exn = Caml_js_exceptions.internalToOCamlException(raw_exn);
-                    if (exn[0] === Json_decode.DecodeError) {
-                      tmp = /* Error */Block.__(1, [exn[1]]);
-                    } else {
-                      throw exn;
-                    }
-                  }
-                  return Promise.resolve(tmp);
+                  return Promise.resolve(decodeColorMap(response.data));
                 })).catch((function (error) {
                 return Promise.resolve(/* Error */Block.__(1, [error.response.status]));
               }));
