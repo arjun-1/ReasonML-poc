@@ -79,11 +79,11 @@ let make = (~greeting) => {
     [|stateUI.colorMapQuery|],
   );
 
-  let themeConfig = ReactUwp.Theme.themeConfig (
-      ~themeName="light"->Some, // set custom theme
-      ~accent="#0078D7"->Some, // set accent color
-      ~useFluentDesign= true->Some, // sure you want use new fluent design.
-      ~desktopBackgroundImage= None // set global desktop background image
+  let themeConfig = ReactUwp.Theme.themeConfig(
+    ~themeName="light", // set custom theme
+    ~accent="#0078D7", // set accent color
+    ~useFluentDesign=true, // sure you want use new fluent design.
+    ()
   );
 
   let message = "You've clicked this";

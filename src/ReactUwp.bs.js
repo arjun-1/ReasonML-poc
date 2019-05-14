@@ -6,10 +6,6 @@ var Caml_option = require("bs-platform/lib/js/caml_option.js");
 var Theme = require("react-uwp/Theme");
 var Button = require("react-uwp/Button");
 
-function getTheme(prim) {
-  return Theme.getTheme(prim);
-}
-
 function ReactUwp$Theme$Theme(Props) {
   var theme = Props.theme;
   var style = Props.style;
@@ -29,10 +25,7 @@ function ReactUwp$Theme$Theme(Props) {
 
 var Theme$1 = /* module */[/* make */ReactUwp$Theme$Theme];
 
-var Theme$2 = /* module */[
-  /* getTheme */getTheme,
-  /* Theme */Theme$1
-];
+var Theme$2 = /* module */[/* Theme */Theme$1];
 
 function ReactUwp$Button(Props) {
   var tooltip = Props.tooltip;

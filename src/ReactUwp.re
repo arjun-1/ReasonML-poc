@@ -1,28 +1,20 @@
 module Theme = {
-
-
   [@bs.deriving abstract]
   type themeConfig = {
-    themeName: option(string),
-    accent: option(string),
-    useFluentDesign: option(bool),
-    desktopBackgroundImage: option(string),
+    [@bs.optional] themeName: string,
+    [@bs.optional] accent: string,
+    [@bs.optional] useFluentDesign: bool,
+    [@bs.optional] desktopBackgroundImage: string,
   };
 
   type themeType = {
     themeName: string,
   };
-
   
   [@bs.module "react-uwp/Theme"] external getTheme: themeConfig => themeType = "getTheme";
 
-
-  let getTheme = getTheme;
-
   module Theme = {
- 
     [@bs.module "react-uwp/Theme" ] external reactComponent: React.component('a) = "Theme";
-
     [@bs.obj]
     external makeProps:
       (
@@ -50,7 +42,6 @@ module Theme = {
 };
 
 module Button = {
-
   [@bs.module "react-uwp/Button"] external reactComponent: React.component('a) = "default";
   [@bs.obj]
   external makeProps:

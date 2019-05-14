@@ -6,6 +6,7 @@ var Curry = require("bs-platform/lib/js/curry.js");
 var Axios = require("axios");
 var React = require("react");
 var Json_decode = require("@glennsl/bs-json/src/Json_decode.bs.js");
+var Theme = require("react-uwp/Theme");
 var Caml_js_exceptions = require("bs-platform/lib/js/caml_js_exceptions.js");
 var ReactUwp$ReactHooksTemplate = require("./ReactUwp.bs.js");
 
@@ -94,13 +95,12 @@ function Component2(Props) {
   var themeConfig = {
     themeName: "light",
     accent: "#0078D7",
-    useFluentDesign: true,
-    desktopBackgroundImage: undefined
+    useFluentDesign: true
   };
   var match$2 = stateUI[/* show */1];
   var match$3 = match[0][/* map */0];
-  return React.createElement("div", undefined, React.createElement(ReactUwp$ReactHooksTemplate.Theme[/* Theme */1][/* make */0], {
-                  theme: ReactUwp$ReactHooksTemplate.Theme[/* getTheme */0](themeConfig),
+  return React.createElement("div", undefined, React.createElement(ReactUwp$ReactHooksTemplate.Theme[/* Theme */0][/* make */0], {
+                  theme: Theme.getTheme(themeConfig),
                   children: null
                 }, React.createElement(ReactUwp$ReactHooksTemplate.Button[/* make */0], {
                       tooltip: "test"
