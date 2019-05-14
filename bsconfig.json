@@ -4,10 +4,16 @@
   "reason": {
     "react-jsx": 3
   },
-  "sources": {
-    "dir" : "src",
-    "subdirs" : true
-  },
+  "sources": [
+    {
+      "dir" : "src",
+      "subdirs" : true
+    },
+    {
+      "dir": "__tests__",
+      "type": "dev"
+    }
+  ],
   "package-specs": [{
     "module": "commonjs",
     "in-source": true
@@ -19,6 +25,10 @@
     "bs-axios",
     "bs-ant-design",
     "@glennsl/bs-json"
+  ],
+  "bs-dev-dependencies": [
+    "@glennsl/bs-jest",
+    "bs-react-test-renderer"
   ],
   "refmt": 3
 }
