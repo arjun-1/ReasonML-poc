@@ -12,12 +12,6 @@ type actionUI =
   | Toggle
   | SetColorMapQuery(string);
 
-type stateAPI = {map: option(OurTypes.colorMap)};
-
-type actionAPI =
-  | SetColorMap(OurTypes.colorMap)
-  | RemoveColorMap;
-
 let decodeColorMap = (json: Js.Json.t): Belt.Result.t(OurTypes.colorMap, string) =>
   try (Json.Decode.{name: json |> field("name", string)}->Belt.Result.Ok) {
   | Json.Decode.DecodeError(error) => error->Belt.Result.Error
@@ -34,14 +28,14 @@ module ColorMapApi = {
 
 [@react.component]
 let make = (~greeting) => {
-  let (stateAPI, dispatchAPI) =
+  let (stateApp, dispatchApp) =
     React.useReducer(
-      (state, action) =>
+      (state: MyContext.stateApp, action: MyContext.actionApp) =>
         switch (action) {
-        | SetColorMap(colorMap) => {map: colorMap->Some}
-        | RemoveColorMap => {map: None}
+        | MyContext.SetColorMap(colorMap) => {...state, map: colorMap->Some}
+        | MyContext.RemoveColorMap => {...state, map: None}
         },
-      {map: None},
+      MyContext.initialState,
     );
 
   let (stateUI, dispatchUI) =
@@ -60,7 +54,7 @@ let make = (~greeting) => {
       ColorMapApi.fetch(colorMapQuery)
       |> then_(result =>
            switch (result) {
-           | Belt.Result.Ok(colorMap) => colorMap->SetColorMap->dispatchAPI->resolve
+           | Belt.Result.Ok(colorMap) => colorMap->SetColorMap->dispatchApp->resolve
            | Belt.Result.Error(error) => Js.log(error)->resolve
            }
          )
@@ -70,7 +64,7 @@ let make = (~greeting) => {
     () =>
       switch (stateUI.colorMapQuery) {
       | None =>
-        RemoveColorMap->dispatchAPI;
+        RemoveColorMap->dispatchApp;
         None;
       | Some(query) =>
         setColorMap(query)->ignore;
@@ -87,25 +81,30 @@ let make = (~greeting) => {
   );
 
   let message = "You've clicked this";
-  <div>
-    <ReactUwp.Theme.Theme
-      theme={ReactUwp.Theme.getTheme(themeConfig)}
-    >
-      <ReactUwp.Button tooltip="test" />
-      <button onClick={_event => Click->dispatchUI}> message->ReasonReact.string </button>
-      <button onClick={_event => Toggle->dispatchUI}>
-        {ReasonReact.string("Toggle greeting")}
-      </button>
-      <button onClick={_event => "from input element"->SetColorMapQuery->dispatchUI}>
-        {ReasonReact.string("Fetch")}
-      </button>
-      {stateUI.show ? greeting->ReasonReact.string : ReasonReact.null}
-      {
-        switch (stateAPI.map) {
-        | Some(map) => map.name->ReasonReact.string
-        | None => ReasonReact.null
-        }
-      }
-    </ReactUwp.Theme.Theme>
+
+  
+  <div>    
+      <MyContext.Provider value={(stateApp, dispatchApp)}>
+        <ReactUwp.Theme.Theme
+          theme={ReactUwp.Theme.getTheme(themeConfig)}
+        >
+          <Component2Nested greeting="test"/>
+          <ReactUwp.Button tooltip="test" />
+          <button onClick={_event => Click->dispatchUI}> message->ReasonReact.string </button>
+          <button onClick={_event => Toggle->dispatchUI}>
+            {ReasonReact.string("Toggle greeting")}
+          </button>
+          <button onClick={_event => "from input element"->SetColorMapQuery->dispatchUI}>
+            {ReasonReact.string("Fetch")}
+          </button>
+          {stateUI.show ? greeting->ReasonReact.string : ReasonReact.null}
+          {
+            switch (stateApp.map) {
+            | Some(map) => map.name->ReasonReact.string
+            | None => ReasonReact.null
+            }
+          }
+        </ReactUwp.Theme.Theme>
+      </MyContext.Provider >
   </div>;
 };
