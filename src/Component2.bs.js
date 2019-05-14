@@ -7,6 +7,7 @@ var Axios = require("axios");
 var React = require("react");
 var Json_decode = require("@glennsl/bs-json/src/Json_decode.bs.js");
 var Caml_js_exceptions = require("bs-platform/lib/js/caml_js_exceptions.js");
+var ReactUwp$ReactHooksTemplate = require("./ReactUwp.bs.js");
 
 function decodeColorMap(json) {
   try {
@@ -90,21 +91,32 @@ function Component2(Props) {
             return undefined;
           }
         }), /* array */[stateUI[/* colorMapQuery */2]]);
+  var themeConfig = {
+    themeName: "light",
+    accent: "#0078D7",
+    useFluentDesign: true,
+    desktopBackgroundImage: undefined
+  };
   var match$2 = stateUI[/* show */1];
   var match$3 = match[0][/* map */0];
-  return React.createElement("div", undefined, React.createElement("button", {
-                  onClick: (function (_event) {
-                      return Curry._1(dispatchUI, /* Click */0);
-                    })
-                }, "You've clicked this"), React.createElement("button", {
-                  onClick: (function (_event) {
-                      return Curry._1(dispatchUI, /* Toggle */1);
-                    })
-                }, "Toggle greeting"), React.createElement("button", {
-                  onClick: (function (_event) {
-                      return Curry._1(dispatchUI, /* SetColorMapQuery */["from input element"]);
-                    })
-                }, "Fetch"), match$2 ? greeting : null, match$3 !== undefined ? match$3[/* name */0] : null);
+  return React.createElement("div", undefined, React.createElement(ReactUwp$ReactHooksTemplate.Theme[/* Theme */1][/* make */0], {
+                  theme: ReactUwp$ReactHooksTemplate.Theme[/* getTheme */0](themeConfig),
+                  children: null
+                }, React.createElement(ReactUwp$ReactHooksTemplate.Button[/* make */0], {
+                      tooltip: "test"
+                    }), React.createElement("button", {
+                      onClick: (function (_event) {
+                          return Curry._1(dispatchUI, /* Click */0);
+                        })
+                    }, "You've clicked this"), React.createElement("button", {
+                      onClick: (function (_event) {
+                          return Curry._1(dispatchUI, /* Toggle */1);
+                        })
+                    }, "Toggle greeting"), React.createElement("button", {
+                      onClick: (function (_event) {
+                          return Curry._1(dispatchUI, /* SetColorMapQuery */["from input element"]);
+                        })
+                    }, "Fetch"), match$2 ? greeting : null, match$3 !== undefined ? match$3[/* name */0] : null));
 }
 
 var make = Component2;

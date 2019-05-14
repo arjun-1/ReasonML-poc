@@ -79,21 +79,33 @@ let make = (~greeting) => {
     [|stateUI.colorMapQuery|],
   );
 
+  let themeConfig = ReactUwp.Theme.themeConfig (
+      ~themeName="light"->Some, // set custom theme
+      ~accent="#0078D7"->Some, // set accent color
+      ~useFluentDesign= true->Some, // sure you want use new fluent design.
+      ~desktopBackgroundImage= None // set global desktop background image
+  );
+
   let message = "You've clicked this";
   <div>
-    <button onClick={_event => Click->dispatchUI}> message->ReasonReact.string </button>
-    <button onClick={_event => Toggle->dispatchUI}>
-      {ReasonReact.string("Toggle greeting")}
-    </button>
-    <button onClick={_event => "from input element"->SetColorMapQuery->dispatchUI}>
-      {ReasonReact.string("Fetch")}
-    </button>
-    {stateUI.show ? greeting->ReasonReact.string : ReasonReact.null}
-    {
-      switch (stateAPI.map) {
-      | Some(map) => map.name->ReasonReact.string
-      | None => ReasonReact.null
+    <ReactUwp.Theme.Theme
+      theme={ReactUwp.Theme.getTheme(themeConfig)}
+    >
+      <ReactUwp.Button tooltip="test" />
+      <button onClick={_event => Click->dispatchUI}> message->ReasonReact.string </button>
+      <button onClick={_event => Toggle->dispatchUI}>
+        {ReasonReact.string("Toggle greeting")}
+      </button>
+      <button onClick={_event => "from input element"->SetColorMapQuery->dispatchUI}>
+        {ReasonReact.string("Fetch")}
+      </button>
+      {stateUI.show ? greeting->ReasonReact.string : ReasonReact.null}
+      {
+        switch (stateAPI.map) {
+        | Some(map) => map.name->ReasonReact.string
+        | None => ReasonReact.null
+        }
       }
-    }
+    </ReactUwp.Theme.Theme>
   </div>;
 };

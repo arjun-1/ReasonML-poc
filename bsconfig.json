@@ -17,6 +17,7 @@
   "bs-dependencies": [
     "reason-react",
     "bs-axios",
+    "bs-ant-design",
     "@glennsl/bs-json"
   ],
   "refmt": 3

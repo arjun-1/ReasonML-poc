@@ -17,9 +17,12 @@
   "license": "MIT",
   "dependencies": {
     "@glennsl/bs-json": "^3.0.0",
+    "antd": "^3.18.1",
+    "bs-ant-design": "^2.1.0",
     "bs-axios": "0.0.42",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
+    "react-uwp": "^1.2.31",
     "reason-react": ">=0.7.0",
     "reductive": "github:reasonml-community/reductive"
   },
